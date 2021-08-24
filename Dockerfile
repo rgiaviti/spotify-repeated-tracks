@@ -9,4 +9,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
+RUN ["python3", "--version"]
+
 ENTRYPOINT [ "python3", "main.py"]
