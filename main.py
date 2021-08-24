@@ -20,6 +20,9 @@ if __name__ == '__main__':
     args = handle_args(sys.argv)
     repeated_tracks = get_repeated_tracks(args["client_id"], args["client_secret"], args["playlist_id"])
     repeated_tracks.sort()
-    print("Faixas Repetidas")
-    for faixa in repeated_tracks:
-        print(" :: {}".format(faixa))
+    if len(repeated_tracks) == 0:
+        print("Não há faixas repetidas")
+    else:
+        print("Faixas Repetidas")
+        for faixa in repeated_tracks:
+            print(" :: {}".format(faixa))
