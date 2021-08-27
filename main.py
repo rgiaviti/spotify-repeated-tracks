@@ -1,6 +1,6 @@
 import sys
 
-from app.tracks import get_repeated_tracks
+from app.tracks import get_similar_tracks
 
 
 def handle_args(passed_args: [str]) -> dict:
@@ -18,11 +18,16 @@ def handle_args(passed_args: [str]) -> dict:
 
 if __name__ == '__main__':
     args = handle_args(sys.argv)
-    repeated_tracks = get_repeated_tracks(args["client_id"], args["client_secret"], args["playlist_id"])
-    repeated_tracks.sort()
-    if len(repeated_tracks) == 0:
-        print("Não há faixas repetidas")
-    else:
-        print("Faixas Repetidas")
-        for faixa in repeated_tracks:
-            print(" :: {}".format(faixa))
+    similar_tracks = get_similar_tracks(args["client_id"], args["client_secret"], args["playlist_id"])
+    similar_tracks = sorted(similar_tracks, key=lambda k: k["name"])
+    found_similarities = False
+    for faixa in similar_tracks:
+        if len(faixa["similarities"]) > 0:
+            found_similarities = True
+            print("{}".format(faixa["name"]))
+            print(" :: Similaridades: ")
+            print("    {}".format(faixa["similarities"]))
+            print("===============================================================")
+
+    if not found_similarities:
+        print("Nenhuma Faixa Similar Encontrada")
